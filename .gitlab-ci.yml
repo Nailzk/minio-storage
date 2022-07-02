@@ -1,0 +1,57 @@
+image: nestjs/cli:latest
+
+stages:
+  # - install
+  - build
+  - deploy
+
+.libs-cache:
+  tags:
+    - docker
+  cache:
+    paths:
+      - node_modules/
+
+# install:
+#   stage: install
+#   extends: .libs-cache
+#   script:
+#     - apk add git
+#     - npm i
+
+build:
+  stage: build
+  tags:
+    - docker
+  # cache:
+  #   paths:
+  #     - dist/
+  #     - node_modules/
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - dist/
+  script:
+    - apk add git
+    - npm i
+    - npm run lint
+    - npm run pack
+
+deploy:
+  stage: deploy
+  services:
+    - docker:dind
+  image: docker:latest
+  cache:
+    paths:
+      - dist/
+  only:
+    - develop
+  script:
+    - CONTAINER_IMAGE="$CI_REGISTRY/$CI_PROJECT_PATH"
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker build --tag $CONTAINER_IMAGE:latest .
+    - docker push $CONTAINER_IMAGE:latest
+    - docker logout
+  tags:
+    - docker

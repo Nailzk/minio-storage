@@ -1,0 +1,9 @@
+.git
+.cache
+.gitignore
+
+node_modules
+
+*.md
+!README*.md
+README-secret.md
