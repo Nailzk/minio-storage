@@ -1,9 +1,12 @@
-import { UsersController } from "./users.controller";
+import { PhotosController } from "./photos.controller";
+import { UsersController } from "./storage.controller";
 
 export {
-    UsersController
+    UsersController,
+    PhotosController,
 };
 
 export default [
-    UsersController
+    UsersController,
+    PhotosController,
 ]

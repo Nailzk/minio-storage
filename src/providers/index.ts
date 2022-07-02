@@ -1,9 +1,12 @@
-import { UsersService } from "./users.service";
+import { PhotosService } from "./photos.service";
+import { StorageService } from "./storage.service";
 
 export {
-    UsersService
+    StorageService,
+    PhotosService
 };
 
 export default [
-    UsersService
+    StorageService,
+    PhotosService
 ]

@@ -1,9 +1,9 @@
-import { User } from "./user.entity";
+import { PhotoEntity } from "./photo.entity";
 
 export {
-    User
+    PhotoEntity
 };
 
 export default [
-    User
+    PhotoEntity
 ]
