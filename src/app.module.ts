@@ -26,7 +26,7 @@ const env = process.env;
             useSSL: false,
             accessKey: env.MINIO_ACCESS_KEY,
             secretKey: env.MINIO_SECRET_KEY,
-        }),
+        })
     ],
     controllers: controllers,
     providers: [...providers, ...interceptor],

@@ -5,12 +5,15 @@ import { PhotoEntity } from "../entities";
 import { PhotosService } from "../providers";
 
 @Crud({
-    model: {
-        type: PhotoEntity,
-    },
+  model: {
+    type: PhotoEntity,
+  },
+  routes: {
+    only: ["getManyBase"],
+  },
 })
 @ApiTags("Photo")
 @Controller("photo")
 export class PhotosController implements CrudController<PhotoEntity> {
-    constructor(public service: PhotosService) {}
+  constructor(public service: PhotosService) {}
 }

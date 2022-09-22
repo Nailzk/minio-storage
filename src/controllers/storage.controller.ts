@@ -14,10 +14,10 @@ import { StorageService } from "../providers";
 
 @ApiTags("Storage")
 @Controller("storage")
-export class UsersController {
+export class StorageController {
     constructor(public service: StorageService) {}
 
-    @Post()
+    @Post("upload")
     @ApiConsumes("multipart/form-data")
     @UseInterceptors(FileInterceptor("file"))
     @ApiBody({

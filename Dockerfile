@@ -1,12 +1,21 @@
-FROM node:12.16.3-alpine
-COPY /dist ./
-COPY /package.json ./
-COPY /package-lock.json ./
-COPY /.env ./
-RUN apk add git && \
-        npm i -g typescript@3.8.3 && \
-        tsc -v && \
-        npm i && \
-        #npm i --production && \
-        ls -la
-CMD ["node", "main.js"]
+FROM node:16.13.2-alpine3.15
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+
+# Install app dependencies
+RUN apk add --no-cache --virtual .gyp python3 make g++ \
+    && npm install \
+    && apk del .gyp
+
+# Bundle app source
+COPY . .
+
+# Creates a "dist" folder with the production build
+RUN npm run build
+
+# Start the server using the production build
+CMD [ "node", "dist/main.js" ]
